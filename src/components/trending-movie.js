@@ -15,7 +15,7 @@ const TrendingMovie = ({ trending }) => {
         width={width}
         height={height * 0.6}
         data={trending}
-        renderItem={({ item, index }) => <MovieCard key={item.id}  item={item} /> }
+        renderItem={({ item }) => <MovieCard key={item.id}  item={item} /> }
         mode="parallax" //  modelar: "parallax", "stack", "horizontal-stack"
         loop //  carousel infinite aylansin
         autoPlay // autoplay qilsin

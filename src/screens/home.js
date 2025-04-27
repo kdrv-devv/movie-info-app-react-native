@@ -30,9 +30,7 @@ const Home = ({ navigation }) => {
   const getTrandingMovie = async () => {
     const data = await fetchTrendingMovie();
     setTrending(data.results);
-    setTimeout(()=>{
-      setLoading(false)
-    },3000)
+    setLoading(false)
   };
 
   const getPopular = async ()=>{

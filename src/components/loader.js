@@ -4,7 +4,7 @@ import AnimatedLoader from "react-native-animated-loader";
 
 const Loader = () => {
   return (
-    <View>
+    <View style={styles.load_con}>
       <AnimatedLoader
         visible={true}
         overlayColor="#242a32"
@@ -21,6 +21,9 @@ const Loader = () => {
 export default Loader;
 
 const styles = StyleSheet.create({
+    load_con:{
+        flex:1
+    },
   lottie: {
     width: 200,
     height: 200,
