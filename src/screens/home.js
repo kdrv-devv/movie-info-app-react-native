@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Image, ScrollView } from "react-native";
-import { Button, StatusBar, StyleSheet, Text, View } from "react-native";
+import { StatusBar, StyleSheet,  View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import {
@@ -11,23 +11,28 @@ import {
 } from "../api";
 import TrendingMovie from "../components/trending-movie";
 import UpcomingMovie from "../components/upcoming-movie";
-import TopRatedMovie from "../components/top-rated";
+import Loader from "../components/loader";
 
 const Home = ({ navigation }) => {
   const [trending, setTrending] = useState([]);
   const [upcoming, setUpcoming] = useState([]);
   const [toprated, setTopRated] = useState([]);
   const [popular ,setPopular] = useState([])
+  const [loading , setLoading] = useState(true)
+
   useEffect(() => {
-    getTrandingMovie();
-    getUpcomingMovie();
-    getTopRatedMovie();
-    getPopular()
+      getTrandingMovie();
+      getUpcomingMovie();
+      getTopRatedMovie();
+      getPopular()
   }, []);
 
   const getTrandingMovie = async () => {
     const data = await fetchTrendingMovie();
     setTrending(data.results);
+    setTimeout(()=>{
+      setLoading(false)
+    },3000)
   };
 
   const getPopular = async ()=>{
@@ -57,17 +62,19 @@ const Home = ({ navigation }) => {
         </View>
       </SafeAreaView>
 
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 20 }}
-      >
-        {trending.length > 0 && <TrendingMovie trending={trending} />}
-        {upcoming.length > 0 && <UpcomingMovie upcoming={upcoming} title={"Upcoming Movies"} />}
-        {popular.length > 0 && <UpcomingMovie upcoming={popular} title={"Popular Movies"} />}
-        {trending.length > 0 && <UpcomingMovie upcoming={trending.reverse()} title={"Trending Movies"} />}
-        {toprated.length > 0 && <TrendingMovie trending={toprated} />}
+    {
+      loading ? <Loader/> : <ScrollView
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{ paddingBottom: 20 }}
+    >
+      {trending.length > 0 && <TrendingMovie trending={trending} />}
+      {upcoming.length > 0 && <UpcomingMovie upcoming={upcoming} title={"Upcoming Movies"} />}
+      {popular.length > 0 && <UpcomingMovie upcoming={popular} title={"Popular Movies"} />}
+      {trending.length > 0 && <UpcomingMovie upcoming={trending.reverse()} title={"Trending Movies"} />}
+      {toprated.length > 0 && <TrendingMovie trending={toprated} />}
 
-      </ScrollView>
+    </ScrollView>
+    }
     </View>
   );
 };
